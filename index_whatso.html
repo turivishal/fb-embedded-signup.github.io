@@ -1,0 +1,106 @@
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>
+	FBLOGIN
+</title></head>
+<body>
+    <form method="post" action="./index.html" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUJNzgzNDMwNTMzZGSNI3WxCjzSc5izKiZJ2Oz0JvnnIT+cHgtOKUPgw0tCdg==" />
+</div>
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="1B396ACF" />
+</div>
+       <script>
+           window.fbAsyncInit = function () {
+      // JavaScript SDK configuration and setup
+    FB.init({
+      appId:    '1084368675447421', // Meta App ID
+      cookie:   true, // enable cookies
+      xfbml:    false, // parse social plugins on this page
+      version:  'v15.0' //Graph API version
+    });
+  };
+
+  // Load the JavaScript SDK asynchronously
+  (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk/debug.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  // Facebook Login with JavaScript SDK
+  function launchWhatsAppSignup() {
+    // Conversion tracking code
+    //fbq && fbq('trackCustom', 'WhatsAppOnboardingStart', {appId: 'your-facebook-app-id', feature: 'whatsapp_embedded_signup'});
+    
+    // Launch Facebook login
+    FB.login(function (response) {
+      if (response.authResponse) {
+        const accessToken = response.authResponse.accessToken;
+        fetchSharedWhatsAppAccountIds(accessToken);
+      } else {
+        console.log('User cancelled login or did not fully authorize.');
+      }
+    }, {
+        scope:        'email, public_profile, business_management, whatsapp_business_management, whatsapp_business_messaging',
+      extras: {
+        feature: 'whatsapp_embedded_signup',
+        setup: {
+          business: {
+            name: 'Acme Inc.',
+            email: 'johndoe@acme.com',
+            phone: {
+              code: 1,
+              number: '6505551234'
+            },
+            website: 'https://www.acme.com',
+            address: {
+              streetAddress1: '1 Acme Way',
+              city: 'Acme Town',
+              state: 'CA',
+              zipPostal: '94000',
+              country: 'US'
+            },
+            timezone: 'UTC-08:00'
+          },
+          phone: {
+            displayName: 'Acme Inc.',
+            category: 'ENTERTAIN',
+            description: ''
+          }
+        }
+      }
+    });
+  }
+
+  // Fetch shared accounts and proceed with integration
+  function fetchSharedWhatsAppAccountIds(accessToken) {
+    FB.api(
+      '/debug_token?input_token='+accessToken+'&access_token=your-system-user-access-token',
+      function (response) {
+        if (response && response.data && response.data.granular_scopes && !response.error) {
+          const waScope = response.data.granular_scopes
+            .find(({ scope }) => scope === 'whatsapp_business_management');
+          if (waScope != null && waScope.target_ids != null) {
+            // Proceed with WhatsApp Business API
+            // integration using waScope.target_ids
+          }
+        }
+      }
+    );
+  }
+</script>
+        <button onclick="launchWhatsAppSignup()" style="background-color: #1877f2; border: 0; border-radius: 4px; color: #fff; cursor: pointer; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: bold; height: 40px; padding: 0 24px;">Login with Facebook</button>
+
+    </form>
+</body>
+</html>

@@ -34,7 +34,12 @@
                         console.log('User cancelled login or did not fully authorize.');
                     }
                 }, {
-                    scope: 'email,public_profile,business_management,whatsapp_business_management,whatsapp_business_messaging'
+                    // scope: 'email,public_profile,business_management,whatsapp_business_management,whatsapp_business_messaging'
+                    scope: "business_management,whatsapp_business_management",
+                    return_scopes: 1,
+                    extras: {
+                        feature: "whatsapp_embedded_signup"
+                    }
                 });
             }
         </script>

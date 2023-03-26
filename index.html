@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
     <head>
-        <title>FBLOGIN</title>
+        <title>Embedded Signup</title>
     </head>
     <body>
         <script>
@@ -22,19 +22,8 @@
                 js.src = "https://connect.facebook.net/en_US/sdk.js";
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
-            // FBQ
-            !function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
             // Facebook Login with JavaScript SDK
             function launchWhatsAppSignup() {
-                // Conversion tracking code
-                fbq && fbq('trackCustom', 'WhatsAppOnboardingStart', { appId: '1084368675447421', feature: 'whatsapp_embedded_signup' });
                 // Launch Facebook login
                 FB.login(function (response) {
                     console.log(response);
@@ -45,11 +34,7 @@
                         console.log('User cancelled login or did not fully authorize.');
                     }
                 }, {
-                    scope: 'email,public_profile,business_management,whatsapp_business_management,whatsapp_business_messaging',
-                    extras: {
-                        feature: 'whatsapp_embedded_signup',
-                        version: 1
-                    }
+                    scope: 'email,public_profile,business_management,whatsapp_business_management,whatsapp_business_messaging'
                 });
             }
         </script>

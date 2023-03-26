@@ -1,14 +1,9 @@
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
-
-<head>
-    <title>FBLOGIN</title>
-</head>
-
-<body>
-    
-        <!-- <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script> -->
+    <head>
+        <title>FBLOGIN</title>
+    </head>
+    <body>
         <script>
             window.fbAsyncInit = function () {
                 // JavaScript SDK configuration and setup
@@ -41,8 +36,7 @@
             // Facebook Login with JavaScript SDK
             function launchWhatsAppSignup() {
                 // Conversion tracking code
-                fbq && fbq('trackCustom', 'WhatsAppOnboardingStart', {appId: '1084368675447421', feature: 'whatsapp_embedded_signup'});
-                
+                fbq && fbq('trackCustom', 'WhatsAppOnboardingStart', { appId: '1084368675447421', feature: 'whatsapp_embedded_signup' });
                 // Launch Facebook login
                 FB.login(function (response) {
                     if (response.authResponse) {
@@ -55,61 +49,14 @@
                         console.log('User cancelled login or did not fully authorize.');
                     }
                 }, {
-                    scope: 'business_management,whatsapp_business_management,whatsapp_business_messaging',
-                    // scope: 'email, public_profile, business_management, whatsapp_business_management, whatsapp_business_messaging',
+                    scope: 'email,public_profile,business_management,whatsapp_business_management,whatsapp_business_messaging',
                     extras: {
                         feature: 'whatsapp_embedded_signup',
-                        version: 2,
-                        setup: {
-                            business: {
-                                name: 'Acme Inc.',
-                                email: 'johndoe@acme.com',
-                                phone: {
-                                    code: 1,
-                                    number: '6505551234'
-                                },
-                                website: 'https://www.acme.com',
-                                address: {
-                                    streetAddress1: '1 Acme Way',
-                                    city: 'Acme Town',
-                                    state: 'CA',
-                                    zipPostal: '94000',
-                                    country: 'US'
-                                },
-                                timezone: 'UTC-08:00'
-                            },
-                            phone: {
-                                displayName: 'Acme Inc.',
-                                category: 'ENTERTAIN',
-                                description: ''
-                            }
-                        }
+                        version: 2
                     }
                 });
             }
-          
-            // Fetch shared accounts and proceed with integration
-            function fetchSharedWhatsAppAccountIds(accessToken) {
-                FB.api('/debug_token?input_token='+accessToken+'&access_token=your-system-user-access-token',
-                    function (response) {
-                        console.log("2.1", response)
-                        if (response && response.data && response.data.granular_scopes && !response.error) {
-                            const waScope = response.data.granular_scopes
-                                .find(({ scope }) => scope === 'whatsapp_business_management');
-                            console.log("3", waScope);
-                            if (waScope != null && waScope.target_ids != null) {
-                                console.log("4", waScope.target_ids);
-                                // Proceed with WhatsApp Business API
-                                // integration using waScope.target_ids
-                            }
-                        }
-                    }
-                );
-            }
         </script>
-        
         <button onclick="launchWhatsAppSignup()" style="background-color: #1877f2; border: 0; border-radius: 4px; color: #fff; cursor: pointer; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: bold; height: 40px; padding: 0 24px;">Login with Facebook</button>
-
-</body>
-
+    </body>
 </html>

@@ -14,7 +14,6 @@
                     version: 'v15.0' //Graph API version
                 });
             };
-
             // Load the JavaScript SDK asynchronously
             (function (d, s, id) {
                 var js, fjs = d.getElementsByTagName(s)[0];
@@ -23,7 +22,7 @@
                 js.src = "https://connect.facebook.net/en_US/sdk.js";
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
-
+            // FBQ
             !function(f,b,e,v,n,t,s)
             {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
             n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -32,19 +31,16 @@
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
-
             // Facebook Login with JavaScript SDK
             function launchWhatsAppSignup() {
                 // Conversion tracking code
                 fbq && fbq('trackCustom', 'WhatsAppOnboardingStart', { appId: '1084368675447421', feature: 'whatsapp_embedded_signup' });
                 // Launch Facebook login
                 FB.login(function (response) {
+                    console.log(response);
                     if (response.authResponse) {
                         const accessToken = response.authResponse.accessToken;
-                        console.log("1", response)
-                        console.log("2", response.authResponse)
-                        fetchSharedWhatsAppAccountIds(accessToken);
-                        //Use this token to call the debug_token API and get the shared WABA's ID
+                        // Use this token to call the debug_token API and get the shared WABA's ID
                     } else {
                         console.log('User cancelled login or did not fully authorize.');
                     }
@@ -52,7 +48,7 @@
                     scope: 'email,public_profile,business_management,whatsapp_business_management,whatsapp_business_messaging',
                     extras: {
                         feature: 'whatsapp_embedded_signup',
-                        version: 2
+                        version: 1
                     }
                 });
             }
